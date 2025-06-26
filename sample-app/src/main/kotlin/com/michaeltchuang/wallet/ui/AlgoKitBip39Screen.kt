@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.runtimeaware.sdk.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import kotlinx.coroutines.launch
 
 

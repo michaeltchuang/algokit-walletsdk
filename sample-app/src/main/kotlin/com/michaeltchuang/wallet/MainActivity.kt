@@ -5,7 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.MaterialTheme
 import com.michaeltchuang.wallet.ui.AlgoKitBip39Screen
-import com.runtimeaware.sdk.RuntimeAwareSdk
+import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 
 class MainActivity : AppCompatActivity() {
     private val runtimeAwareSdk by lazy { RuntimeAwareSdk(this) }

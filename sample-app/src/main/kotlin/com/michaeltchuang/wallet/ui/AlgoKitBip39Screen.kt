@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import com.michaeltchuang.walletsdk.runtimeaware.RuntimeAwareSdk
 import kotlinx.coroutines.launch
 
-
 private const val SAMPLE_STRING =
     "borrow among leopard smooth trade cake profit proud matrix bottom goose charge oxygen shine punch hotel era monitor fossil violin tip notice any visit"
 
@@ -42,7 +41,7 @@ fun AlgoKitBip39Screen(runtimeAwareSdk: RuntimeAwareSdk) {
             .fillMaxHeight(0.5f)
             .fillMaxWidth()
             .background(color = Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var entropy by remember { mutableStateOf<String?>(null) }
 
@@ -51,9 +50,10 @@ fun AlgoKitBip39Screen(runtimeAwareSdk: RuntimeAwareSdk) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Icon Button",
-                    modifier = Modifier
-                        .size(48.dp)
-                        .padding(8.dp)
+                    modifier =
+                        Modifier
+                            .size(48.dp)
+                            .padding(8.dp),
                 )
             }
         }
@@ -65,7 +65,6 @@ fun AlgoKitBip39Screen(runtimeAwareSdk: RuntimeAwareSdk) {
                 } else {
                     Log.i("AlogKit", "runtimeAwareSdk not initialize")
                 }
-
             }
         }) {
             Text("Account Create")
@@ -74,7 +73,7 @@ fun AlgoKitBip39Screen(runtimeAwareSdk: RuntimeAwareSdk) {
         Text(
             modifier = Modifier.wrapContentSize(),
             text = entropy.toString(),
-            fontSize = 18.sp
+            fontSize = 18.sp,
         )
     }
 }

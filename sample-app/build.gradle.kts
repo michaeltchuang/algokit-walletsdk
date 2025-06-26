@@ -26,8 +26,8 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -61,3 +61,4 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
 }
+

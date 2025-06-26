@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.privacysandbox.sdkruntime.client.SdkSandboxManagerCompat
 import androidx.privacysandbox.sdkruntime.core.LoadSdkCompatException
-import com.runtimeenabled.api.MyReSdkService
-import com.runtimeenabled.api.MyReSdkServiceFactory
+import com.runtimeenabled.api.WalletSdkService
+import com.runtimeenabled.api.WalletSdkServiceFactory
 
 /**
  * This class represents an SDK that was created before the SDK runtime was available. It is in the
@@ -25,16 +25,9 @@ class RuntimeAwareSdk(private val context: Context) {
         val isRuntimeEnabledSdkLoaded = loadSdkIfNeeded(context) != null
         return isRuntimeEnabledSdkLoaded
     }
-
-    suspend fun createFile(size: Long): String? {
-        if (!isSdkLoaded()) return null
-        return loadSdkIfNeeded(context)?.createFile(size)
+    suspend fun getEntropyFromMnemonic(mnemonic: String): String? {
+        return loadSdkIfNeeded(context)?.getEntropyFromMnemonic(mnemonic = mnemonic)
     }
-
-//    suspend fun showFullscreenUi(context: Context) {
-//        if (!isSdkLoaded()) return
-//        loadSdkIfNeeded(context)?.showFullscreenUi(SdkActivityLauncherImpl(context))
-//    }
 
     /** Keeps a reference to a sandboxed SDK and makes sure it's only loaded once. */
     companion object Loader {
@@ -48,9 +41,9 @@ class RuntimeAwareSdk(private val context: Context) {
          */
         private const val SDK_NAME = "com.runtimeenabled.sdk"
 
-        private var remoteInstance: MyReSdkService? = null
+        private var remoteInstance: WalletSdkService? = null
 
-        suspend fun loadSdkIfNeeded(context: Context): MyReSdkService? {
+        suspend fun loadSdkIfNeeded(context: Context): WalletSdkService? {
             try {
                 // First we need to check if the SDK is already loaded. If it is we just return it.
                 // The sandbox manager will throw an exception if we try to load an SDK that is
@@ -61,7 +54,8 @@ class RuntimeAwareSdk(private val context: Context) {
                 val sandboxManagerCompat = SdkSandboxManagerCompat.from(context)
 
                 val sandboxedSdk = sandboxManagerCompat.loadSdk(SDK_NAME, Bundle.EMPTY)
-                remoteInstance = MyReSdkServiceFactory.wrapToMyReSdkService(sandboxedSdk.getInterface()!!)
+                remoteInstance =
+                    WalletSdkServiceFactory.wrapToWalletSdkService(sandboxedSdk.getInterface()!!)
                 // Initialize SDK.
                 remoteInstance?.initialize()
                 return remoteInstance

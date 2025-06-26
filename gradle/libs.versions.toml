@@ -1,4 +1,6 @@
 [versions]
+algoSdk = "2.8.2"
+algoGoMobilesdk = "1.0.1"
 activityCompose = "1.10.1"
 composeBom = "2025.06.00"
 kotlin = "2.1.20"
@@ -16,7 +18,13 @@ lifecycleCommon = "2.8.7"
 coroutines = "1.7.3"
 annotation = "1.9.1"
 kotlinStdlibJdk8 = "2.1.10"
+khex = "1.1.2"
+peraCompactDecimalFormat = "1.0.1"
+xhdwalletapi = "1.1.0"
+bip39 = "1.0.7"
 androidxTestRunner = "1.6.2"
+tink = "1.14.0"
+koin = "4.0.1-Beta1"
 
 [plugins]
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -62,6 +70,23 @@ sdkruntime-tools-tools = { module = "androidx.privacysandbox.tools:tools", versi
 sdkruntime-tools-apicompiler = { module = "androidx.privacysandbox.tools:tools-apicompiler", version.ref = "sdkRuntimeShim" }
 sdkruntime-tools-apigenerator = { module = "androidx.privacysandbox.tools:tools-apigenerator", version.ref = "sdkRuntimeShim" }
 sdkruntime-tools-apipackager = { module = "androidx.privacysandbox.tools:tools-apipackager", version.ref = "sdkRuntimeShim" }
+# Wallet SDK - Security / Blockchain / Crypto
+algosdk = { module = "com.algorand:algosdk", version.ref = "algoSdk" }
+algorand-go-mobile = { group = "io.github.perawallet", name = "algorand-go-mobile-sdk", version.ref = "algoGoMobilesdk" }
+khex = { module = "com.github.komputing:khex", version.ref = "khex" }
+pera-compact-decimal-format = { group = "io.github.perawallet", name = "peracompactdecimalformat", version.ref = "peraCompactDecimalFormat" }
+xhdwalletapi = { module = "foundation.algorand.xhdwalletapi:xhdwalletapi-android", version.ref = "xhdwalletapi" }
+kotlin-bip39 = { module = "cash.z.ecc.android:kotlin-bip39", version.ref = "bip39" }
+tink-android = { module = "com.google.crypto.tink:tink-android", version.ref = "tink" }
+
+# Dependency Injection
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-core-viewmodel = { module = "io.insert-koin:koin-core-viewmodel" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]

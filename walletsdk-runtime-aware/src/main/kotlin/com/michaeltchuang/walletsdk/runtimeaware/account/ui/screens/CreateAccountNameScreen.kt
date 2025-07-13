@@ -64,6 +64,8 @@ fun CreateAccountNameScreen(
                 CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
                     onFinish()
                 }
+
+                CreateAccountNameViewModel.ViewEvent.ShowGenericError -> TODO()
             }
         }
     }
@@ -107,7 +109,6 @@ fun CreateAccountNameScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-
             CustomBasicTextField(accountName, {
                 accountName = it
             }, {
@@ -121,11 +122,9 @@ fun CreateAccountNameScreen(
                 .align(Alignment.BottomCenter),
             {
                 accountCreation?.let {
-                    viewModel.processIntent(
-                        CreateAccountNameViewModel.CreateAccountNameIntent.AddNewAccount(
+                    viewModel.addNewAccount(
                             it,
                             accountName
-                        )
                     )
                     onFinish()
                 }

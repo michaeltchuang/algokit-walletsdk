@@ -61,11 +61,13 @@ fun CreateAccountNameScreen(
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
-                CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
+                is CreateAccountNameViewModel.ViewEvent.FinishedAccountCreation -> {
                     onFinish()
                 }
 
-                CreateAccountNameViewModel.ViewEvent.ShowGenericError -> TODO()
+                is CreateAccountNameViewModel.ViewEvent.Error -> {
+                    Log.d("CreateAccountTypeScreen", it.message)
+                }
             }
         }
     }

@@ -33,15 +33,15 @@ class CreateAccountNameViewModel(
                     nameRegistrationPreviewUseCase.addNewAccount(accountCreation)
                     eventDelegate.sendEvent(ViewEvent.FinishedAccountCreation)
                 } catch (e: Exception) {
-                    displayError()
+                    displayError(e.message ?: "Unknown error")
                 }
             }
         }
     }
 
-    private fun displayError() {
+    private fun displayError(message: String) {
         viewModelScope.launch {
-            eventDelegate.sendEvent(ViewEvent.ShowGenericError)
+            eventDelegate.sendEvent(ViewEvent.Error(message))
         }
     }
 
@@ -52,6 +52,6 @@ class CreateAccountNameViewModel(
 
     sealed interface ViewEvent {
         data object FinishedAccountCreation : ViewEvent
-        data object ShowGenericError : ViewEvent
+        data class Error(val message: String) : ViewEvent
     }
 }

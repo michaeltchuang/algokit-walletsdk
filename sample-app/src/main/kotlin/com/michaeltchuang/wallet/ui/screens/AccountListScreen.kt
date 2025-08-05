@@ -208,9 +208,10 @@ private fun AccountsList(
 @Composable
 private fun ConfettiEffect(onComplete: () -> Unit) {
     LottieConfetti(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.5f),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f),
     )
 
     LaunchedEffect(Unit) {
@@ -246,7 +247,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-            -> {
+        -> {
             onAccountCreated()
         }
     }

@@ -1,6 +1,5 @@
 package com.michaeltchuang.wallet.ui.navigation
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -37,14 +36,15 @@ fun TopBar() {
         },
         actions = {
             Icon(
-                modifier = Modifier
-                    .size(55.dp)
-                    .padding(horizontal = 8.dp)
-                    .clickable(onClick = {
-                        scop.launch {
-                            QREvent.qrClickEvent.emit(true)
-                        }
-                    }),
+                modifier =
+                    Modifier
+                        .size(55.dp)
+                        .padding(horizontal = 8.dp)
+                        .clickable(onClick = {
+                            scop.launch {
+                                QREvent.qrClickEvent.emit(true)
+                            }
+                        }),
                 painter = painterResource(com.michaeltchuang.wallet.R.drawable.ic_qr_scan),
                 contentDescription = "qr",
                 tint = AlgoKitTheme.colors.textMain,

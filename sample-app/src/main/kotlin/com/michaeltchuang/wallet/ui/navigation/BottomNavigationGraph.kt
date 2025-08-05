@@ -1,8 +1,6 @@
 package com.michaeltchuang.wallet.ui.navigation
 
-import android.util.Log
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -27,7 +25,7 @@ fun NavGraphBuilder.getBottomNavigationGraph(
         AccountListScreen(
             tag = backStackEntry.toRoute<Accounts>().details.name,
             navController = navController,
-            snackbarViewModel = sharedViewModel
+            snackbarViewModel = sharedViewModel,
         )
         SnackBarLayout(sharedViewModel, snackbarHostState)
     }

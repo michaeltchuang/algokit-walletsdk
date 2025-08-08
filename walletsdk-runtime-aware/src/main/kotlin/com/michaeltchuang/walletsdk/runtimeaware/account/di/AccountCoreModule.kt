@@ -7,6 +7,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.Add
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.AddAlgo25AccountUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.DeleteAlgo25AccountUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.DeleteHdKeyAccountUseCase
+import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.GetAccountRegistrationTypeUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.GetLocalAccountUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.core.NameRegistrationUseCase
 import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.local.DeleteAlgo25Account
@@ -25,9 +26,12 @@ val accountCoreModule = module {
 
     single { DeleteHdKeyAccountUseCase(get()) }
 
-    single { NameRegistrationUseCase(get(), get(), get(), get()) }
-    single<AccountCreationHdKeyTypeMapper> { DefaultAccountCreationHdKeyTypeMapperImpl(get()) }
     single { GetLocalAccountUseCase(get(), get(), get()) }
     single<GetLocalAccounts> { get<GetLocalAccountUseCase>() }
+    single { GetAccountRegistrationTypeUseCase(get()) }
+
+    single { NameRegistrationUseCase(get(), get(), get(), get(), get(), get()) }
+    single<AccountCreationHdKeyTypeMapper> { DefaultAccountCreationHdKeyTypeMapperImpl(get()) }
+
     single { RecoverPassphraseUseCase(get(), get()) }
 }

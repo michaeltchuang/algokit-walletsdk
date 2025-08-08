@@ -113,11 +113,12 @@ fun getAccountType(localAccount: AccountRegistrationType): String =
 @Composable
 fun AccountItemPreview() {
     // Create a sample account for preview
-    val sampleAccount = AccountLite(
-        address = "ASDFGHJKLASDFGHJKL",
-        customName = "Sample Account",
-        registrationType = AccountRegistrationType.Algo25
-    )
+    val sampleAccount =
+        AccountLite(
+            address = "ASDFGHJKLASDFGHJKL",
+            customName = "Sample Account",
+            registrationType = AccountRegistrationType.Algo25,
+        )
 
     AlgoKitTheme {
         AccountItem(

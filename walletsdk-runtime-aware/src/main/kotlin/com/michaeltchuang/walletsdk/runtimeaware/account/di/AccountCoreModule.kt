@@ -16,15 +16,15 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.domain.usecase.recovery
 import org.koin.dsl.module
 
 val accountCoreModule = module {
-    single { AddAlgo25AccountUseCase(get()) }
+    single { AddAlgo25AccountUseCase(get(), get()) }
 
     factory<AddAlgo25Account> { get<AddAlgo25AccountUseCase>() }
     single { AccountAdditionUseCase(get(), get(), get(), get()) }
 
-    single { DeleteAlgo25AccountUseCase(get()) }
+    single { DeleteAlgo25AccountUseCase(get(), get()) }
     single<DeleteAlgo25Account> { get<DeleteAlgo25AccountUseCase>() }
 
-    single { DeleteHdKeyAccountUseCase(get()) }
+    single { DeleteHdKeyAccountUseCase(get(), get()) }
 
     single { GetLocalAccountUseCase(get(), get(), get()) }
     single<GetLocalAccounts> { get<GetLocalAccountUseCase>() }

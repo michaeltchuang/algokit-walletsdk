@@ -44,6 +44,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
+import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
@@ -250,28 +252,33 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
         mutableStateOf<TextLayoutResult?>(null)
     }
     val annotatedString = createAnnotatedString()
-
+    val webViewController by rememberWebViewController()
+    WebViewPlatform(webViewController = webViewController)
     Text(
         style = typography.footnote.sans,
         color = AlgoKitTheme.colors.textGray,
         modifier = modifier
-            .pointerInput(Unit) {
+            .pointerInput(annotatedString) {
                 detectTapGestures { pos ->
                     layoutResult.value?.let { layoutResult ->
-                        val offset = layoutResult.getOffsetForPosition(pos)
+                        // Adjust the position to account for padding
+                        val adjustedPos = pos.copy(x = pos.x - 43.dp.toPx(), y = pos.y - 24.dp.toPx())
+                        val offset = layoutResult.getOffsetForPosition(adjustedPos)
                         annotatedString.getStringAnnotations(
                             tag = "TERMS_AND_CONDITIONS",
                             start = offset,
-                            end = offset
+                            end = offset + 1
                         ).firstOrNull()?.let {
-
+                            Log.d("Mithilesh", "TERMS_AND_CONDITIONS")
+                            webViewController.open(WalletSdkConstants.TERMS_AND_SERVICES_URL)
                         }
                         annotatedString.getStringAnnotations(
                             tag = "PRIVACY_POLICY",
                             start = offset,
-                            end = offset
+                            end = offset + 1
                         ).firstOrNull()?.let {
-
+                            Log.d("Mithilesh", "PRIVACY_POLICY")
+                            webViewController.open(WalletSdkConstants.PRIVACY_POLICY_URL)
                         }
                     }
                 }

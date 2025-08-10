@@ -51,7 +51,7 @@ class OnboardingAccountTypeViewModel(
     }
 
     fun createAlgo25Account() {
-        stateDelegate.onState<com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel.ViewState.Idle> {
+        stateDelegate.onState<ViewState.Idle> {
             stateDelegate.updateState { ViewState.Loading }
             viewModelScope.launch {
                 try {

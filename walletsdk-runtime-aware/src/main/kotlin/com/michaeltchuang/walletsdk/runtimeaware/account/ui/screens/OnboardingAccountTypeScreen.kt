@@ -269,7 +269,6 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            Log.d("Mithilesh", "TERMS_AND_CONDITIONS")
                             webViewController.open(WalletSdkConstants.TERMS_AND_SERVICES_URL)
                         }
                         annotatedString.getStringAnnotations(
@@ -277,7 +276,6 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            Log.d("Mithilesh", "PRIVACY_POLICY")
                             webViewController.open(WalletSdkConstants.PRIVACY_POLICY_URL)
                         }
                     }

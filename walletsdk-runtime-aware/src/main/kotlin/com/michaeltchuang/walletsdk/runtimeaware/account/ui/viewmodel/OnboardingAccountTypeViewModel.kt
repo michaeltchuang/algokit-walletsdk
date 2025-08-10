@@ -15,15 +15,15 @@ import com.michaeltchuang.walletsdk.runtimeaware.utils.base64DecodeToByteArray
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.bip39.model.HdKeyAddressIndex
 import kotlinx.coroutines.launch
 
-class CreateAccountTypeViewModel(
+class OnboardingAccountTypeViewModel(
     private val aesPlatformManager: AESPlatformManager,
     private val runtimeAwareSdk: RuntimeAwareSdk,
     private val accountCreationHdKeyTypeMapper: AccountCreationHdKeyTypeMapper,
     private val stateDelegate: StateDelegate<ViewState>,
     private val eventDelegate: EventDelegate<ViewEvent>,
 ) : ViewModel(),
-    StateViewModel<CreateAccountTypeViewModel.ViewState> by stateDelegate,
-    EventViewModel<CreateAccountTypeViewModel.ViewEvent> by eventDelegate {
+    StateViewModel<OnboardingAccountTypeViewModel.ViewState> by stateDelegate,
+    EventViewModel<OnboardingAccountTypeViewModel.ViewEvent> by eventDelegate {
 
     init {
         stateDelegate.setDefaultState(ViewState.Content)
@@ -51,7 +51,7 @@ class CreateAccountTypeViewModel(
     }
 
     fun createAlgo25Account() {
-        stateDelegate.onState<ViewState.Idle> {
+        stateDelegate.onState<com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel.ViewState.Idle> {
             stateDelegate.updateState { ViewState.Loading }
             viewModelScope.launch {
                 try {

@@ -48,7 +48,7 @@ import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
@@ -64,13 +64,13 @@ const val PRIVACY_POLICY_URL = "https://perawallet.app/privacy-policy/"
 @Composable
 fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message: String) -> Unit) {
 
-    val viewModel: CreateAccountTypeViewModel = koinViewModel()
+    val viewModel: OnboardingAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
-                is CreateAccountTypeViewModel.ViewEvent.AccountCreated -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.AccountCreated -> {
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
@@ -78,7 +78,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
                     Log.d("CreateAccountTypeScreen", it.accountCreation.address)
                 }
 
-                is CreateAccountTypeViewModel.ViewEvent.Error -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.Error -> {
                     Log.d("CreateAccountTypeScreen", it.message)
                 }
             }
@@ -127,7 +127,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
 
 @Composable
 private fun CreateWalletHdWidget(
-    viewModel: CreateAccountTypeViewModel,
+    viewModel: OnboardingAccountTypeViewModel,
     scope: CoroutineScope,
 ) {
     GroupChoiceWidget(

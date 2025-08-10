@@ -128,7 +128,7 @@ fun RecoveryPhraseScreen(
 
                     IconButton(
                         onClick = {
-                            webViewController.open(WalletSdkConstants.REPO_URL)
+                            webViewController.open(WalletSdkConstants.RECOVER_ACCOUNT_LEARN_MORE)
                         },
                         modifier = Modifier
                             .size(32.dp)

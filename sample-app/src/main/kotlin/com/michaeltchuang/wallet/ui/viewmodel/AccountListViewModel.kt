@@ -35,8 +35,8 @@ class AccountListViewModel(
                 stateDelegate.updateState { AccountsState.Error(e.message ?: "Unknown error") }
                 eventDelegate.sendEvent(
                     AccountsEvent.ShowError(
-                        e.message ?: "Failed to fetch accounts."
-                    )
+                        e.message ?: "Failed to fetch accounts.",
+                    ),
                 )
             }
         }
@@ -53,8 +53,8 @@ class AccountListViewModel(
                 stateDelegate.updateState { AccountsState.Error(e.message ?: "Unknown error") }
                 eventDelegate.sendEvent(
                     AccountsEvent.ShowError(
-                        e.message ?: "Failed to delete account."
-                    )
+                        e.message ?: "Failed to delete account.",
+                    ),
                 )
             }
         }

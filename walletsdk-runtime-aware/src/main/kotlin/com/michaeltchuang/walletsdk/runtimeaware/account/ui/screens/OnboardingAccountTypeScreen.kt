@@ -51,7 +51,7 @@ import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.CreateAccountTypeViewModel
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.viewmodel.OnboardingAccountTypeViewModel
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme.typography
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.GroupChoiceWidget
@@ -66,14 +66,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message: String) -> Unit) {
 
-    val viewModel: CreateAccountTypeViewModel = koinViewModel()
+    val viewModel: OnboardingAccountTypeViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
     val viewState = viewModel.state.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
         viewModel.viewEvent.collect {
             when (it) {
-                is CreateAccountTypeViewModel.ViewEvent.AccountCreated -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.AccountCreated -> {
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
@@ -81,7 +81,7 @@ fun CreateAccountTypeScreen(navController: NavHostController, onClick: (message:
                     Log.d("CreateAccountTypeScreen", it.accountCreation.address)
                 }
 
-                is CreateAccountTypeViewModel.ViewEvent.Error -> {
+                is OnboardingAccountTypeViewModel.ViewEvent.Error -> {
                     Log.d("CreateAccountTypeScreen", it.message)
                 }
             }
@@ -151,7 +151,7 @@ private fun ContentState(
 
 @Composable
 private fun CreateWalletHdWidget(
-    viewModel: CreateAccountTypeViewModel,
+    viewModel: OnboardingAccountTypeViewModel,
     scope: CoroutineScope,
 ) {
     GroupChoiceWidget(
@@ -294,7 +294,6 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            Log.d("Mithilesh", "TERMS_AND_CONDITIONS")
                             webViewController.open(WalletSdkConstants.TERMS_AND_SERVICES_URL)
                         }
                         annotatedString.getStringAnnotations(
@@ -302,7 +301,6 @@ fun TermsAndPrivacy(modifier: Modifier = Modifier) {
                             start = offset,
                             end = offset + 1
                         ).firstOrNull()?.let {
-                            Log.d("Mithilesh", "PRIVACY_POLICY")
                             webViewController.open(WalletSdkConstants.PRIVACY_POLICY_URL)
                         }
                     }

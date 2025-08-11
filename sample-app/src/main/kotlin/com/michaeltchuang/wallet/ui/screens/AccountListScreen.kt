@@ -103,7 +103,11 @@ fun AccountListScreen(
         )
     }
 
-    OnBoardingBottomSheet(showSheet = showSheet, qrScanFlow = qrScanFlow) { event ->
+    OnBoardingBottomSheet(
+        showSheet = showSheet,
+        accounts = viewModel.accountLite.size,
+        qrScanFlow = qrScanFlow
+    ) { event ->
         handleBottomSheetEvent(
             event = event,
             onCloseSheet = { showSheet = false },
@@ -247,7 +251,7 @@ private fun handleBottomSheetEvent(
 
         AlgoKitEvent.ALGO25_ACCOUNT_CREATED,
         AlgoKitEvent.HD_ACCOUNT_CREATED,
-        -> {
+            -> {
             onAccountCreated()
         }
     }

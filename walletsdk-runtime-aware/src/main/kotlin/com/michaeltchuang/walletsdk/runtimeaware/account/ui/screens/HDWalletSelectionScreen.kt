@@ -203,7 +203,7 @@ fun WalletItem(
 @PreviewLightDark
 @Composable
 fun HdWalletSelectionScreenContentPreview() {
-    val fakeViewState = CreateAccountTypeViewModel.ViewState.Content
+    val fakeViewState = CreateAccountTypeViewModel.ViewState.Content(hasAnySeed = false)
     AlgoKitTheme {
         HdWalletSelectionScreenContent(
             viewState = fakeViewState,

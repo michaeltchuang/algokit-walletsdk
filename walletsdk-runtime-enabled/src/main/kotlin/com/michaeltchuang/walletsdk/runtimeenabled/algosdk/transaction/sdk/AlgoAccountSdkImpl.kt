@@ -7,11 +7,6 @@ import com.michaeltchuang.walletsdk.runtimeenabled.utils.clearFromMemory
 import java.security.NoSuchAlgorithmException
 
 internal class AlgoAccountSdkImpl : AlgoAccountSdk {
-  /*  init {
-        Security.removeProvider("BC")
-        Security.insertProviderAt(BouncyCastleProvider(), 0)
-    }*/
-
     override fun createAlgo25Account(): Algo25Account? {
         return try {
             val account = Account()

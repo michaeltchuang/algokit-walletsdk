@@ -2,18 +2,32 @@ package com.michaeltchuang.walletsdk.runtimeenabled.algosdk.transaction.sdk
 
 import com.algorand.algosdk.account.Account
 import com.algorand.algosdk.mnemonic.Mnemonic
+import com.algorand.algosdk.sdk.Sdk
 import com.michaeltchuang.walletsdk.runtimeenabled.algosdk.domain.model.Algo25Account
 import com.michaeltchuang.walletsdk.runtimeenabled.utils.clearFromMemory
 import java.security.NoSuchAlgorithmException
 
 internal class AlgoAccountSdkImpl : AlgoAccountSdk {
     override fun createAlgo25Account(): Algo25Account? {
+//        return try {
+//            Security.removeProvider("BC")
+//            Security.insertProviderAt(BouncyCastleProvider(), 0)
+//            val account = Account()
+//            val secretKey = Mnemonic.toKey(account.toMnemonic())
+//            val output = Algo25Account(
+//                address = account.address.encodeAsString(),
+//                secretKey = secretKey.decodeToString()
+//            )
+//            secretKey.clearFromMemory()
+//            output
+//        } catch (e: Exception) {
+//            null
+//        }
         return try {
-            val account = Account()
-            val secretKey = Mnemonic.toKey(account.toMnemonic())
+            var secretKey = Sdk.generateSK()
             val output = Algo25Account(
-                address = account.address.encodeAsString(),
-                secretKey = secretKey.decodeToString()
+                address = Sdk.generateAddressFromSK(secretKey),
+                secretKey = secretKey.copyOf().toString()
             )
             secretKey.clearFromMemory()
             output

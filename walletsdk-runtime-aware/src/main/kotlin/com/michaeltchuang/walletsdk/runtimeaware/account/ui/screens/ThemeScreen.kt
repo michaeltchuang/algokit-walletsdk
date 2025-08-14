@@ -105,7 +105,6 @@ fun ThemeScreen(navController: NavController) {
                                 }
                             }
                         }
-                      //  click()
                     },
                     colors = RadioButtonDefaults.colors(
                         selectedColor = AlgoKitTheme.colors.positive,

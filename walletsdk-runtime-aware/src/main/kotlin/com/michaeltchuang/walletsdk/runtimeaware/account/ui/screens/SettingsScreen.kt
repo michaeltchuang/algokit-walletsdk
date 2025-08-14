@@ -1,6 +1,5 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
 import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
-import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.AlgoKitScreens
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 
@@ -103,7 +102,7 @@ fun SettingsItem(icon: Int, title: String, navController: NavController) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { navController.navigate(OnBoardingScreens.THEME_SCREEN.name) }
+            .clickable { navController.navigate(AlgoKitScreens.THEME_SCREEN.name) }
             .padding(vertical = 12.dp)
     ) {
         Icon(

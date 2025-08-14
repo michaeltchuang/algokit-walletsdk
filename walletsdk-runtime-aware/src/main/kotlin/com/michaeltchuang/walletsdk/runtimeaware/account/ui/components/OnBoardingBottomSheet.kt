@@ -9,15 +9,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,12 +34,15 @@ import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.InitialRegis
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.QRCodeScannerScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoverAnAccountScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.RecoveryPhraseScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.SettingsScreen
+import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.ThemeScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.TransactionSignatureRequestScreen
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens.TransactionSuccessScreen
 import com.michaeltchuang.walletsdk.runtimeaware.deeplink.model.DeepLink
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants.REPO_URL
 import com.michaeltchuang.walletsdk.runtimeaware.utils.getData
+import com.michaeltchuang.walletsdk.runtimeaware.utils.getSavedThemePreferenceFlow
 import kotlinx.coroutines.launch
 
 enum class AlgoKitEvent {
@@ -43,16 +50,7 @@ enum class AlgoKitEvent {
 }
 
 enum class OnBoardingScreens() {
-    CREATE_ACCOUNT_TYPE, CREATE_ACCOUNT_NAME,
-    HD_WALLET_SELECTION_SCREEN,
-    ACCOUNT_RECOVERY_TYPE_SCREEN,
-    QR_CODE_SCANNER_SCREEN,
-    RECOVER_PHRASE_SCREEN,
-    RECOVER_AN_ACCOUNT_SCREEN,
-    ALGOKIT_WEBVIEW_PLATFORM_SCREEN,
-    TRANSACTION_SIGNATURE_SCREEN,
-    TRANSACTION_SUCCESS_SCREEN,
-    INITIAL_REGISTER_INTRO_SCREEN
+    CREATE_ACCOUNT_TYPE, CREATE_ACCOUNT_NAME, HD_WALLET_SELECTION_SCREEN, ACCOUNT_RECOVERY_TYPE_SCREEN, QR_CODE_SCANNER_SCREEN, RECOVER_PHRASE_SCREEN, RECOVER_AN_ACCOUNT_SCREEN, ALGOKIT_WEBVIEW_PLATFORM_SCREEN, TRANSACTION_SIGNATURE_SCREEN, TRANSACTION_SUCCESS_SCREEN, INITIAL_REGISTER_INTRO_SCREEN, SETTINGS_SCREEN, THEME_SCREEN
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +58,8 @@ enum class OnBoardingScreens() {
 fun OnBoardingBottomSheet(
     showSheet: Boolean,
     accounts: Int,
-    qrScanFlow: Boolean = false,
+    launchQRScanScreen: Boolean = false,
+    launchSettingsScreen: Boolean = false,
     onAlgoKitEvent: (event: AlgoKitEvent) -> Unit
 ) {
     if (showSheet) {
@@ -71,8 +70,9 @@ fun OnBoardingBottomSheet(
             }, sheetState = sheetState, dragHandle = null
         ) {
             OnBoardingBottomSheetNavHost(
-                startDestination = startDestination(qrScanFlow, accounts),
-                closeSheet = {
+                startDestination = startDestination(
+                    accounts, launchQRScanScreen, launchSettingsScreen
+                ), closeSheet = {
                     onAlgoKitEvent(AlgoKitEvent.ClOSE_BOTTOMSHEET)
                 }) {
                 onAlgoKitEvent(AlgoKitEvent.ALGO25_ACCOUNT_CREATED)
@@ -83,19 +83,30 @@ fun OnBoardingBottomSheet(
 
 @Composable
 fun OnBoardingBottomSheetNavHost(
-    navController: NavHostController = rememberNavController(),
     startDestination: String = OnBoardingScreens.CREATE_ACCOUNT_TYPE.name,
     closeSheet: () -> Unit,
     onFinish: () -> Unit,
 ) {
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val navController = rememberNavController()
+    var lastThemePrefKey by rememberSaveable { mutableStateOf<String?>(null) }
+    val themePrefFlow = remember { getSavedThemePreferenceFlow(context) }
+
+    LaunchedEffect(themePrefFlow) {
+        themePrefFlow.collect { pref ->
+            val currentKey = pref.name
+            if (lastThemePrefKey != null && lastThemePrefKey != currentKey) {
+                navController.popBackStack()
+            }
+            lastThemePrefKey = currentKey
+        }
+    }
+
     Scaffold(
-        modifier = Modifier.fillMaxHeight(.9f), snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState, modifier = Modifier.padding(bottom = 64.dp)
-            )
-        }) { padding ->
+        modifier = Modifier.fillMaxHeight(.9f)
+    ) { padding ->
         Box(
             modifier = Modifier
                 .background(color = AlgoKitTheme.colors.background)
@@ -171,13 +182,20 @@ fun OnBoardingBottomSheetNavHost(
                 composable(route = OnBoardingScreens.INITIAL_REGISTER_INTRO_SCREEN.name) {
                     InitialRegisterIntroScreen(navController)
                 }
+                composable(route = OnBoardingScreens.SETTINGS_SCREEN.name) {
+                    SettingsScreen(navController)
+                }
+                composable(route = OnBoardingScreens.THEME_SCREEN.name) {
+                    ThemeScreen(navController)
+                }
             }
         }
     }
 }
 
-fun startDestination(qrScanFlow: Boolean, accounts: Int): String {
+fun startDestination(accounts: Int, qrScanFlow: Boolean, launchSettingsScreen: Boolean): String {
     return when {
+        launchSettingsScreen -> OnBoardingScreens.SETTINGS_SCREEN.name
         qrScanFlow -> OnBoardingScreens.QR_CODE_SCANNER_SCREEN.name
         accounts == 0 -> OnBoardingScreens.INITIAL_REGISTER_INTRO_SCREEN.name
         else -> OnBoardingScreens.CREATE_ACCOUNT_TYPE.name

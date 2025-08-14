@@ -72,7 +72,7 @@ data class TopLevelRouteDetails<T : Any>(
     @DrawableRes val icon: Int,
 )
 
-private val topLevelRoutes: List<TopLevelRoute> = listOf(Accounts, Discover, Settings)
+private val topLevelRoutes: List<TopLevelRoute> = listOf(Accounts, Discover)
 
 sealed interface TopLevelRoute {
     val type: Type

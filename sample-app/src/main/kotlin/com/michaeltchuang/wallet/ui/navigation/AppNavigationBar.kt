@@ -17,7 +17,7 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
 import kotlinx.serialization.Serializable
 
 @Composable
-fun AlgoKitNavigationBar(
+fun AppNavigationBar(
     navController: NavController,
     displayCoreActionsBottomSheet: () -> Unit,
 ) {
@@ -106,16 +106,5 @@ data object Discover : TopLevelRoute {
             name = "Discover",
             route = this,
             icon = R.drawable.ic_global,
-        )
-}
-
-@Serializable
-data object Settings : TopLevelRoute {
-    override val type: TopLevelRoute.Type = TopLevelRoute.Type.NavButton("Settings")
-    override val details =
-        TopLevelRouteDetails(
-            name = "Settings",
-            route = this,
-            icon = R.drawable.ic_settings,
         )
 }

@@ -47,20 +47,21 @@ class SplashActivity : AppCompatActivity() {
 @Composable
 private fun SplashLoading() {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = AlgoKitTheme.colors.background),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(color = AlgoKitTheme.colors.background),
+        contentAlignment = Alignment.Center,
     ) {
         val composition by rememberLottieComposition(
             LottieCompositionSpec.Url(
                 // A lightweight loading animation; replace with your own if desired
-                "https://lottie.host/2b3f7c3e-9c2a-4c9a-8d92-5a2f2b2f7e3e/5QpLkqgk9Q.json"
-            )
+                "https://lottie.host/2b3f7c3e-9c2a-4c9a-8d92-5a2f2b2f7e3e/5QpLkqgk9Q.json",
+            ),
         )
         LottieAnimation(
             composition = composition,
-            iterations = LottieConstants.IterateForever
+            iterations = LottieConstants.IterateForever,
         )
     }
 }

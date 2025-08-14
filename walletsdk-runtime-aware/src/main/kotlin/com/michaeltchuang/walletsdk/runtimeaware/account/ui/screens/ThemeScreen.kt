@@ -86,7 +86,6 @@ fun ThemeScreen(navController: NavController) {
                                 }
                             }
                         }
-                        //click()
                     }
                     .padding(vertical = 16.dp)
             ) {

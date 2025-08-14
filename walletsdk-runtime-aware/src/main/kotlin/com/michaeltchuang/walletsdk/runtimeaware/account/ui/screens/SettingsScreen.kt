@@ -1,5 +1,6 @@
 package com.michaeltchuang.walletsdk.runtimeaware.account.ui.screens
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,9 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.final_class.webview_multiplatform_mobile.webview.WebViewPlatform
+import com.final_class.webview_multiplatform_mobile.webview.controller.rememberWebViewController
 import com.michaeltchuang.walletsdk.runtimeaware.R
 import com.michaeltchuang.walletsdk.runtimeaware.account.ui.components.OnBoardingScreens
 import com.michaeltchuang.walletsdk.runtimeaware.designsystem.theme.AlgoKitTheme
+import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 
 @Composable
 fun SettingsScreen(navController: NavController) {
@@ -71,22 +75,25 @@ fun SettingsScreen(navController: NavController) {
             style = AlgoKitTheme.typography.body.regular.sansMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-        SettingsItem(R.drawable.ic_feedback, stringResource(R.string.get_help), navController)
-        SettingsItem(
+        SettingsWebviewItem(R.drawable.ic_feedback,
+            stringResource(R.string.get_help),
+            WalletSdkConstants.SUPPORT_URL
+        )
+        SettingsWebviewItem(
             R.drawable.ic_text_document,
             stringResource(R.string.privacy_policy),
-            navController
+            WalletSdkConstants.PRIVACY_POLICY_URL
         )
-        SettingsItem(
+        SettingsWebviewItem(
             R.drawable.ic_text_document,
             stringResource(R.string.terms_and_services),
-            navController
+            WalletSdkConstants.TERMS_AND_SERVICES_URL
         )
-        SettingsItem(
-            R.drawable.ic_code,
-            stringResource(R.string.developer_settings),
-            navController
-        )
+//        SettingsItem(
+//            R.drawable.ic_code,
+//            stringResource(R.string.developer_settings),
+//            navController
+//        )
     }
 }
 
@@ -97,6 +104,39 @@ fun SettingsItem(icon: Int, title: String, navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { navController.navigate(OnBoardingScreens.THEME_SCREEN.name) }
+            .padding(vertical = 12.dp)
+    ) {
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = title,
+            tint = AlgoKitTheme.colors.textMain,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = title,
+            color = AlgoKitTheme.colors.textMain,
+            modifier = Modifier.weight(1f),
+            style = AlgoKitTheme.typography.body.regular.sansMedium,
+        )
+        Icon(
+            Icons.Default.KeyboardArrowRight,
+            tint = AlgoKitTheme.colors.textMain,
+            contentDescription = stringResource(R.string.next)
+        )
+    }
+}
+
+@Composable
+fun SettingsWebviewItem(icon: Int, title: String, url: String) {
+    val webViewController by rememberWebViewController()
+    WebViewPlatform(webViewController = webViewController)
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { webViewController.open(url) }
             .padding(vertical = 12.dp)
     ) {
         Icon(

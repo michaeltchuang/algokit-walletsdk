@@ -24,6 +24,8 @@ import com.michaeltchuang.walletsdk.runtimeaware.designsystem.widget.AlgoKitTopB
 import com.michaeltchuang.walletsdk.runtimeaware.utils.WalletSdkConstants
 import org.koin.androidx.compose.koinViewModel
 
+private const val TAG = "CreateAccountTypeScreen"
+
 @Composable
 fun DeveloperSettingsScreen(navController: NavController, onClick: (message: String) -> Unit) {
     val viewModel: OnboardingAccountTypeViewModel = koinViewModel()
@@ -35,11 +37,11 @@ fun DeveloperSettingsScreen(navController: NavController, onClick: (message: Str
                         ?.savedStateHandle
                         ?.set("accountCreation", it.accountCreation)
                     navController.navigate(AlgoKitScreens.CREATE_ACCOUNT_NAME.name)
-                    Log.d("CreateAccountTypeScreen", it.accountCreation.address)
+                    Log.d(TAG, it.accountCreation.address)
                 }
 
                 is OnboardingAccountTypeViewModel.ViewEvent.Error -> {
-                    Log.d("CreateAccountTypeScreen", it.message)
+                    Log.d(TAG, it.message)
                 }
             }
         }
@@ -57,13 +59,15 @@ fun DeveloperSettingsScreen(navController: NavController, onClick: (message: Str
             onClick = { navController.popBackStack() })
 
         SettingsItem(
-            R.drawable.ic_node, stringResource(R.string.node_settings)
+            R.drawable.ic_node,
+            stringResource(R.string.node_settings)
         ) {
             onClick(WalletSdkConstants.FEATURE_NOT_SUPPORTED_YET)
         }
 
         SettingsItem(
-            R.drawable.ic_wallet, stringResource(R.string.create_legacy_algo25_account)
+            R.drawable.ic_wallet,
+            stringResource(R.string.create_legacy_algo25_account)
         ) {
             viewModel.createAlgo25Account()
         }

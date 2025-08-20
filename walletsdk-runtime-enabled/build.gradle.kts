@@ -33,7 +33,7 @@ android {
 
 dependencies {
     api(libs.algosdk)
-   // api(libs.algorand.go.mobile)
+    api(libs.algorand.go.mobile)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.kotlin.stdlib.jdk8)
     implementation(libs.androidx.lifecycle.common)
